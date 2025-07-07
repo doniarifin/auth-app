@@ -51,6 +51,7 @@ go run main.go
 
 ## 🗂️ Project Structure
 
+```
 auth-app/
 ├── config/          # Load env & config
 ├── controllers/     # Auth handlers
@@ -61,7 +62,7 @@ auth-app/
 ├── utils/           # Hashing & JWT
 ├── .env             # Environment variables
 ├── main.go          # Entry point
-
+```
 
 ## 🛠️ Stack
 
