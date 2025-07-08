@@ -33,7 +33,7 @@ mv env_copy .env
 
 ### 3. Install Dependencies & Run the App
 
-Ensure you have SQL Server 2019 and SQL Server Management Studio (SSMS) installed.
+Ensure you have **SQL Server 2019** and **SQL Server Management Studio (SSMS)** installed.
 
 Then run the app:
 
