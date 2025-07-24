@@ -2,13 +2,13 @@ package controllers
 
 import (
 	"auth-app/models"
-	"database/sql"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func ProfileHandler(db *sql.DB) gin.HandlerFunc {
+func ProfileHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		email := c.GetString("email")
 

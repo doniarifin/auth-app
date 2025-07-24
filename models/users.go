@@ -1,7 +1,9 @@
 package models
 
 import (
-	"database/sql"
+	"errors"
+
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -10,43 +12,28 @@ type User struct {
 	Password string `json:"password,omitempty"`
 }
 
-func FindUserByEmail(db *sql.DB, email string) (*User, error) {
-	query := "SELECT id, email, password FROM users WHERE email = @p1"
-	user := &User{}
+func FindUserByEmail(db *gorm.DB, email string) (*User, error) {
+	user := User{}
 
-	err := db.QueryRow(query, email).Scan(&user.ID, &user.Email, &user.Password)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			// not found
-			return nil, nil
-		}
-		return nil, err
+	result := db.Select("id", "email", "password").Where(&User{Email: email}).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
 	}
-
-	return user, nil
+	return &user, nil
 }
 
-
-func CreateUser(db *sql.DB, user *User) error {
-	query := `INSERT INTO users (email, password) VALUES (@p1, @p2)`
-	_, err := db.Exec(query, user.Email, user.Password)
-	return err
+func CreateUser(db *gorm.DB, user *User) error {
+	result := db.Create(&user)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return result.Error
+	}
+	return nil
 }
 
-func GetAllUsers(db *sql.DB) ([]User, error) {
-	rows, err := db.Query("SELECT id, email FROM users")
-	if err != nil {
-		return nil, err
+func GetAllUsers(db *gorm.DB) ([]User, error) {
+	result := db.Select("id", "email").First(&User{})
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return nil, result.Error
 	}
-	defer rows.Close()
-
-	var users []User
-	for rows.Next() {
-		var u User
-		if err := rows.Scan(&u.ID, &u.Email); err != nil {
-			return nil, err
-		}
-		users = append(users, u)
-	}
-	return users, nil
+	return []User{}, nil
 }

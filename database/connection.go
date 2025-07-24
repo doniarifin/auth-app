@@ -1,28 +1,32 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 
-	_ "github.com/denisenkom/go-mssqldb"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func ConnectDB() (*sql.DB, error) {
+func ConnectDB() (*gorm.DB, error) {
 	user := os.Getenv("DB_USER")
 	pass := os.Getenv("DB_PASS")
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	name := os.Getenv("DB_NAME")
 
-	connString := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
-		user, pass, host, port, name,
+	// for sqlserver
+	// dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
+	// 	user, pass, host, port, name,
+	// )
+	// db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+
+	//for postgres
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
+		host, user, pass, name, port,
 	)
-	db, err := sql.Open("sqlserver", connString)
-	if err != nil {
-		return nil, err
-	}
-	err = db.Ping()
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	if err != nil {
 		return nil, err
 	}

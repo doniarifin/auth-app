@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		log.Fatal("DB connection error: ", err)
 	}
-	defer db.Close()
+
 	database.RunMigration(db)
 
 	// Init Gin

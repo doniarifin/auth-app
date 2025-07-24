@@ -3,10 +3,10 @@ package controllers
 import (
 	"auth-app/models"
 	"auth-app/utils"
-	"database/sql"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type RegisterRequest struct {
@@ -19,7 +19,7 @@ type RegisterResponse struct {
 	Token   string `json:"token"`
 }
 
-func RegisterHandler(db *sql.DB) gin.HandlerFunc {
+func RegisterHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req RegisterRequest
 		if err := c.ShouldBindJSON(&req); err != nil {
@@ -28,11 +28,11 @@ func RegisterHandler(db *sql.DB) gin.HandlerFunc {
 		}
 
 		// check existing email
-		existingUser, err := models.FindUserByEmail(db, req.Email)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing user"})
-			return
-		}
+		existingUser, _ := models.FindUserByEmail(db, req.Email)
+		// if err != nil {
+		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing user"})
+		// 	return
+		// }
 		if existingUser != nil {
 			c.JSON(http.StatusConflict, gin.H{"error": "Email is already registered"})
 			return
@@ -78,7 +78,7 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
-func LoginHandler(db *sql.DB) gin.HandlerFunc {
+func LoginHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req LoginRequest
 
@@ -92,15 +92,16 @@ func LoginHandler(db *sql.DB) gin.HandlerFunc {
 
 		// check user by email
 		user, err := models.FindUserByEmail(db, req.Email)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": "Internal server error",
-			})
-			return
-		}
 		if user == nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"error": "User not found",
+			})
+			return
+		}
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
 			})
 			return
 		}
