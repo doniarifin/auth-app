@@ -72,6 +72,7 @@ auth-app/
 
 - ✅ Go
 - ✅ Gin
+- ✅ GORM
 - ✅ SQL Server
 - ✅ JWT
 - ✅ bcrypt
