@@ -1,7 +1,6 @@
 package main
 
 import (
-	"auth-app/config"
 	"auth-app/database"
 	"auth-app/routes"
 	"log"
@@ -12,7 +11,7 @@ import (
 
 func main() {
 	// Init env
-	config.InitEnv()
+	// config.InitEnv()
 
 	// Connect DB
 	db, err := database.ConnectDB()
