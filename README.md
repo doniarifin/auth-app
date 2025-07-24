@@ -1,6 +1,6 @@
-# 🛡️ Go Auth App (using SQL Server)
+# 🛡️ Go Auth App (using PostgreSQL)
 
-Simple authentication API built with **Go**, **Gin**, and **SQL Server**.
+Simple authentication API built with **Go**, **Gin**, and **PostgreSQL**.
 
 ---
 
@@ -10,7 +10,7 @@ Simple authentication API built with **Go**, **Gin**, and **SQL Server**.
 - ✅ User Login with JWT
 - ✅ Protected Route (`/me`)
 - ✅ Password Hashing (bcrypt)
-- ✅ SQL Server integration
+- ✅ PostgreSQL integration
 - ✅ JWT-based authentication
 - ✅ Clean Project Structure
 
@@ -33,7 +33,7 @@ mv env_copy .env
 
 ### 3. Install Dependencies & Run the App
 
-Ensure you have **SQL Server 2019** and **SQL Server Management Studio (SSMS)** installed.
+Ensure you have **PostgreSQL** installed.
 
 Then run the app:
 
@@ -73,7 +73,7 @@ auth-app/
 - ✅ Go
 - ✅ Gin
 - ✅ GORM
-- ✅ SQL Server
+- ✅ PostgreSQL
 - ✅ JWT
 - ✅ bcrypt
 
