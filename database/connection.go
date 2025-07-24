@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 )
 
@@ -16,16 +16,16 @@ func ConnectDB() (*gorm.DB, error) {
 	name := os.Getenv("DB_NAME")
 
 	// for sqlserver
-	// dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
-	// 	user, pass, host, port, name,
-	// )
-	// db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
+		user, pass, host, port, name,
+	)
+	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 
 	//for postgres
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
-		host, user, pass, name, port,
-	)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
+	// 	host, user, pass, name, port,
+	// )
+	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		return nil, err
