@@ -19,6 +19,16 @@ type RegisterResponse struct {
 	Token   string `json:"token"`
 }
 
+// PingExample godoc
+// @Summary
+// @Schemes
+// @Description
+// @Tags Register
+// @Accept json
+// @Produce json
+// @Param request body RegisterRequest false "RegisterRequest"
+// @Success 200 {object} RegisterResponse
+// @Router /register [post]
 func RegisterHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req RegisterRequest
@@ -75,9 +85,20 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token string `json:"token"`
+	Message string `json:"message"`
+	Token   string `json:"token"`
 }
 
+// PingExample godoc
+// @Summary
+// @Schemes
+// @Description
+// @Tags Login
+// @Accept json
+// @Produce json
+// @Param request body LoginRequest false "LoginRequest"
+// @Success 200 {object} LoginResponse
+// @Router /login [post]
 func LoginHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req LoginRequest
@@ -124,6 +145,9 @@ func LoginHandler(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// Return token response
-		c.JSON(http.StatusOK, LoginResponse{Token: token})
+		c.JSON(http.StatusOK, LoginResponse{
+			Message: "Success",
+			Token:   token,
+		})
 	}
 }

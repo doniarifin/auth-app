@@ -1,6 +1,6 @@
-# 🛡️ Go Auth App (using SQL Server)
+# 🛡️ Go Auth App (using PostgreSQL)
 
-Simple authentication API built with **Go**, **Gin**, and **SQL Server**.
+Simple authentication API built with **Go**, **Gin**, and **PostgreSQL**.
 
 ---
 
@@ -8,11 +8,10 @@ Simple authentication API built with **Go**, **Gin**, and **SQL Server**.
 
 - ✅ User Registration
 - ✅ User Login with JWT
-- ✅ Protected Route (`/me`)
 - ✅ Password Hashing (bcrypt)
-- ✅ SQL Server integration
+- ✅ PostgreSQL integration
 - ✅ JWT-based authentication
-- ✅ Clean Project Structure
+- ✅ Swagger API Documentation
 
 ---
 
@@ -50,7 +49,7 @@ go run main.go
 | ------ | ----------- | ----------------- |
 | POST   | `/register` | Register new user |
 | POST   | `/login`    | Login with JWT    |
-| GET    | `/api/me`   | Get current user  |
+| GET    | `/api/v1/GetCurrentUser`   | Get current user  |
 
 
 ## 🗂️ Project Structure
@@ -72,8 +71,9 @@ auth-app/
 
 - ✅ Go
 - ✅ Gin
-- ✅ SQL Server
+- ✅ PostgreSQL
 - ✅ JWT
 - ✅ bcrypt
+- ✅ Swagger
 
 ---

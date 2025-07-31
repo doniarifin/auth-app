@@ -8,7 +8,27 @@ import (
 	"gorm.io/gorm"
 )
 
-func ProfileHandler(db *gorm.DB) gin.HandlerFunc {
+type EmailRequest struct {
+	Email string `json:"email" example:"user@example.com"`
+}
+type EmailResponse struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
+}
+
+// @BasePath /api/v1
+
+// PingExample godoc
+// @Summary
+// @Schemes
+// @Security BearerAuth
+// @Description
+// @Tags GetCurrentUser
+// @Accept json
+// @Produce json
+// @Success 200 {object} EmailResponse
+// @Router /api/v1/GetCurrentUser [get]
+func GetCurrentUser(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		email := c.GetString("email")
 
