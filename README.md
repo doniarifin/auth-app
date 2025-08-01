@@ -1,21 +1,21 @@
-# 🛡️ Go Auth App (using PostgreSQL)
+# Go Auth App with Swagger API Doc (using PostgreSQL)
 
 Simple authentication API built with **Go**, **Gin**, and **PostgreSQL**.
 
 ---
 
-## 📦 Features
+## Features
 
-- ✅ User Registration
-- ✅ User Login with JWT
-- ✅ Password Hashing (bcrypt)
-- ✅ PostgreSQL integration
-- ✅ JWT-based authentication
-- ✅ Swagger API Documentation
+- User Registration
+- User Login with JWT
+- Password Hashing (bcrypt)
+- PostgreSQL integration
+- JWT-based authentication
+- Swagger API Documentation
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone Repo
 
@@ -41,9 +41,23 @@ go mod tidy
 go run main.go
 ```
 
+### 4. Swagger API Documentation
+
+<!-- Ensure you have **Swagger** installed. -->
+
+**[Click here](https://github.com/swaggo/swag)** to view the Swaggo documentation
+
+Then open in browser:
+
+```
+http://localhost:8080/swagger/index.html
+```
+
+*note: set port according to your local port*
+
 ---
 
-## 🧪 Endpoints
+## Endpoints
 
 | Method | Endpoint    | Description       |
 | ------ | ----------- | ----------------- |
@@ -52,7 +66,7 @@ go run main.go
 | GET    | `/api/v1/GetCurrentUser`   | Get current user  |
 
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 auth-app/
@@ -67,14 +81,14 @@ auth-app/
 ├── main.go          # Entry point
 ```
 
-## 🛠️ Stack
+## Stack
 
-- ✅ Go
-- ✅ Gin
-- ✅ GORM
-- ✅ PostgreSQL
-- ✅ JWT
-- ✅ bcrypt
-- ✅ Swagger
+- Go
+- Gin
+- GORM
+- PostgreSQL
+- JWT
+- bcrypt
+- Swagger
 
 ---
