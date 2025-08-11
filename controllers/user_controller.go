@@ -44,3 +44,55 @@ func GetCurrentUser(db *gorm.DB) gin.HandlerFunc {
 		})
 	}
 }
+
+type UserRequest struct {
+	Email string `json:"email"`
+}
+
+type UserReponse struct {
+	Message string `json:"message"`
+}
+
+// @BasePath /api/v1
+
+// PingExample godoc
+// @Summary
+// @Schemes
+// @Security BearerAuth
+// @Description
+// @Tags UpdateUser
+// @Accept json
+// @Produce json
+// @Param request body UserRequest true "UserRequest"
+// @Success 200 {object} UserReponse
+// @Router /api/v1/UpdateUser [put]
+func UpdateUser(db *gorm.DB, c *gin.Context) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		email := c.GetString("email")
+
+		currentUser, err := models.FindUserByEmail(db, email)
+		if err != nil {
+			return
+		}
+
+		var payload UserRequest
+		if err := c.ShouldBindJSON(&payload); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+			return
+		}
+
+		req := &models.User{
+			ID:       currentUser.ID,
+			Password: currentUser.Password,
+			Email:    payload.Email,
+		}
+
+		update := models.UpdateUser(db, req)
+		if update != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
+	}
+}

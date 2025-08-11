@@ -38,6 +38,16 @@ definitions:
       token:
         type: string
     type: object
+  controllers.UserReponse:
+    properties:
+      message:
+        type: string
+    type: object
+  controllers.UserRequest:
+    properties:
+      email:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -56,6 +66,27 @@ paths:
       - BearerAuth: []
       tags:
       - GetCurrentUser
+  /api/v1/UpdateUser:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: UserRequest
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/controllers.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.UserReponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - UpdateUser
   /login:
     post:
       consumes:

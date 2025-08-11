@@ -1,6 +1,7 @@
 package models
 
 import (
+	"auth-app/utils"
 	"errors"
 
 	"gorm.io/gorm"
@@ -12,6 +13,23 @@ type User struct {
 	Password string `json:"password,omitempty"`
 }
 
+func CreateUser(db *gorm.DB, user *User) error {
+	user.ID = utils.NewUuid()
+	result := db.Create(&user)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return result.Error
+	}
+	return nil
+}
+
+func UpdateUser(db *gorm.DB, user *User) error {
+	result := db.Save(&user)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
 func FindUserByEmail(db *gorm.DB, email string) (*User, error) {
 	user := User{}
 
@@ -20,14 +38,6 @@ func FindUserByEmail(db *gorm.DB, email string) (*User, error) {
 		return nil, result.Error
 	}
 	return &user, nil
-}
-
-func CreateUser(db *gorm.DB, user *User) error {
-	result := db.Create(&user)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return result.Error
-	}
-	return nil
 }
 
 func GetAllUsers(db *gorm.DB) ([]User, error) {

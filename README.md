@@ -24,10 +24,12 @@ git clone https://github.com/doniarifin/go-auth-app.git
 cd go-auth-app
 ```
 
-### 2. Rename .env
+### 2. Rename/Copy .env_copy to .env
+
+Copy
 
 ```
-mv env_copy .env
+cp .env_copy .env
 ```
 
 ### 3. Install Dependencies & Run the App
@@ -53,18 +55,17 @@ Then open in browser:
 http://localhost:8080/swagger/index.html
 ```
 
-*note: set port according to your local port*
+_note: set port according to your local port_
 
 ---
 
 ## Endpoints
 
-| Method | Endpoint    | Description       |
-| ------ | ----------- | ----------------- |
-| POST   | `/register` | Register new user |
-| POST   | `/login`    | Login with JWT    |
-| GET    | `/api/v1/GetCurrentUser`   | Get current user  |
-
+| Method | Endpoint                 | Description       |
+| ------ | ------------------------ | ----------------- |
+| POST   | `/register`              | Register new user |
+| POST   | `/login`                 | Login with JWT    |
+| GET    | `/api/v1/GetCurrentUser` | Get current user  |
 
 ## Project Structure
 

@@ -15,7 +15,9 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
-	// Terapkan middleware CORS ke router utama (r)
+	c := &gin.Context{}
+
+	// apply middleware CORS
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -37,4 +39,5 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	protected := r.Group("/api/v1")
 	protected.Use(middleware.JWTMiddleware())
 	protected.GET("/GetCurrentUser", controllers.GetCurrentUser(db))
+	protected.PUT("/UpdateUser", controllers.UpdateUser(db, c))
 }
