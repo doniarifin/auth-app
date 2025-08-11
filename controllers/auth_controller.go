@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"auth-app/logics"
 	"auth-app/models"
 	"auth-app/utils"
 	"net/http"
@@ -19,14 +20,12 @@ type RegisterResponse struct {
 	Token   string `json:"token"`
 }
 
-// PingExample godoc
-// @Summary
-// @Schemes
+// Register godoc
 // @Description
-// @Tags Register
+// @Tags Auth
 // @Accept json
 // @Produce json
-// @Param request body RegisterRequest false "RegisterRequest"
+// @Param request body RegisterRequest false "Register Request"
 // @Success 200 {object} RegisterResponse
 // @Router /register [post]
 func RegisterHandler(db *gorm.DB) gin.HandlerFunc {
@@ -38,7 +37,7 @@ func RegisterHandler(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// check existing email
-		existingUser, _ := models.FindUserByEmail(db, req.Email)
+		existingUser, _ := logics.FindUserByEmail(db, req.Email)
 		// if err != nil {
 		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing user"})
 		// 	return
@@ -89,14 +88,12 @@ type LoginResponse struct {
 	Token   string `json:"token"`
 }
 
-// PingExample godoc
-// @Summary
-// @Schemes
+// Login godoc
 // @Description
-// @Tags Login
+// @Tags Auth
 // @Accept json
 // @Produce json
-// @Param request body LoginRequest false "LoginRequest"
+// @Param request body LoginRequest false "Login Request"
 // @Success 200 {object} LoginResponse
 // @Router /login [post]
 func LoginHandler(db *gorm.DB) gin.HandlerFunc {
@@ -112,7 +109,7 @@ func LoginHandler(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// check user by email
-		user, err := models.FindUserByEmail(db, req.Email)
+		user, err := logics.FindUserByEmail(db, req.Email)
 		if user == nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"error": "User not found",

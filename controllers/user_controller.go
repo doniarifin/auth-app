@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"auth-app/logics"
 	"auth-app/models"
 	"net/http"
 
@@ -18,21 +19,19 @@ type EmailResponse struct {
 
 // @BasePath /api/v1
 
-// PingExample godoc
-// @Summary
-// @Schemes
+// GetCurrentUser godoc
 // @Security BearerAuth
-// @Description
-// @Tags GetCurrentUser
+// @Description Get current user by ID
+// @Tags User
 // @Accept json
 // @Produce json
 // @Success 200 {object} EmailResponse
 // @Router /api/v1/GetCurrentUser [get]
 func GetCurrentUser(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		email := c.GetString("email")
+		id := c.GetString("id")
 
-		user, err := models.FindUserByEmail(db, email)
+		user, err := logics.FindUserByID(db, id)
 		if err != nil || user == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get user"})
 			return
@@ -55,23 +54,23 @@ type UserReponse struct {
 
 // @BasePath /api/v1
 
-// PingExample godoc
-// @Summary
-// @Schemes
+// UpdateUser godoc
 // @Security BearerAuth
-// @Description
-// @Tags UpdateUser
+// @Description Update a user's email
+// @Tags User
 // @Accept json
 // @Produce json
-// @Param request body UserRequest true "UserRequest"
+// @Param id path string true "ID"
+// @Param user body UserRequest true "User data"
 // @Success 200 {object} UserReponse
-// @Router /api/v1/UpdateUser [put]
+// @Router /api/v1/UpdateUser/{id} [put]
 func UpdateUser(db *gorm.DB, c *gin.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		email := c.GetString("email")
+		id := c.Param("id")
 
-		currentUser, err := models.FindUserByEmail(db, email)
+		currentUser, err := logics.FindUserByID(db, id)
 		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "User not found"})
 			return
 		}
 
@@ -87,12 +86,51 @@ func UpdateUser(db *gorm.DB, c *gin.Context) gin.HandlerFunc {
 			Email:    payload.Email,
 		}
 
-		update := models.UpdateUser(db, req)
+		update := models.UpdateUser(db, req, id)
 		if update != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
 			return
 		}
 
 		c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
+	}
+}
+
+type DeleteRequest struct {
+	ID string `json:"id"`
+}
+
+type DeleteReponse struct {
+	Message string `json:"message"`
+}
+
+// @BasePath /api/v1
+
+// DeleteUserByID godoc
+// @Security BearerAuth
+// @Description Delete a user given their ID
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path string true "ID"
+// @Success 200 {object} DeleteReponse
+// @Router /api/v1/DeleteUser/{id} [delete]
+func DeleteUser(db *gorm.DB, c *gin.Context) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+
+		getUser, err := logics.FindUserByID(db, id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "User not found"})
+			return
+		}
+
+		delete := models.DeleteUser(db, getUser.ID)
+		if delete != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
 	}
 }

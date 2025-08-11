@@ -39,5 +39,6 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	protected := r.Group("/api/v1")
 	protected.Use(middleware.JWTMiddleware())
 	protected.GET("/GetCurrentUser", controllers.GetCurrentUser(db))
-	protected.PUT("/UpdateUser", controllers.UpdateUser(db, c))
+	protected.PUT("/UpdateUser/:id", controllers.UpdateUser(db, c))
+	protected.DELETE("/DeleteUser/:id", controllers.DeleteUser(db, c))
 }

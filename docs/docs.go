@@ -15,13 +15,14 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/GetCurrentUser": {
-            "get": {
+        "/api/v1/DeleteUser/{id}": {
+            "delete": {
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
+                "description": "Delete a user given their ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -29,7 +30,43 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "GetCurrentUser"
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.DeleteReponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/GetCurrentUser": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get current user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
                 ],
                 "responses": {
                     "200": {
@@ -41,13 +78,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/UpdateUser": {
+        "/api/v1/UpdateUser/{id}": {
             "put": {
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
+                "description": "Update a user's email",
                 "consumes": [
                     "application/json"
                 ],
@@ -55,13 +93,21 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "UpdateUser"
+                    "User"
                 ],
                 "parameters": [
                     {
-                        "description": "UserRequest",
-                        "name": "request",
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User data",
+                        "name": "user",
                         "in": "body",
+                        "required": true,
                         "schema": {
                             "$ref": "#/definitions/controllers.UserRequest"
                         }
@@ -86,11 +132,11 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Login"
+                    "Auth"
                 ],
                 "parameters": [
                     {
-                        "description": "LoginRequest",
+                        "description": "Login Request",
                         "name": "request",
                         "in": "body",
                         "schema": {
@@ -117,11 +163,11 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Register"
+                    "Auth"
                 ],
                 "parameters": [
                     {
-                        "description": "RegisterRequest",
+                        "description": "Register Request",
                         "name": "request",
                         "in": "body",
                         "schema": {
@@ -141,6 +187,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controllers.DeleteReponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "controllers.EmailResponse": {
             "type": "object",
             "properties": {
