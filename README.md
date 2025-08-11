@@ -20,8 +20,8 @@ Simple authentication API built with **Go**, **Gin**, and **PostgreSQL**.
 ### 1. Clone Repo
 
 ```
-git clone https://github.com/doniarifin/go-auth-app.git
-cd go-auth-app
+git clone https://github.com/doniarifin/auth-app.git
+cd auth-app
 ```
 
 ### 2. Rename/Copy .env_copy to .env
