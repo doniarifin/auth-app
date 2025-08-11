@@ -79,6 +79,7 @@ _note: set port according to your local port_
 | POST   | `/login`                 | Login with JWT    |
 | GET    | `/api/v1/GetCurrentUser` | Get current user  |
 | PUT    | `/api/v1/UpdateUser`     | Update User       |
+| Delete | `/api/v1/DeleteUser`     | Delete User       |
 
 ## Project Structure
 
