@@ -45,7 +45,19 @@ go run main.go
 
 ### 4. Swagger API Documentation
 
-<!-- Ensure you have **Swagger** installed. -->
+Ensure you have **Swagger** installed.
+
+Install
+
+```
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+
+Run `swag init` in the project root containing `main.go` to generate the docs folder and `docs/docs.go` file from your comments.
+
+```
+swag init
+```
 
 **[Click here](https://github.com/swaggo/swag)** to view the Swaggo documentation
 
