@@ -73,13 +73,13 @@ _note: set port according to your local port_
 
 ## Endpoints
 
-| Method | Endpoint                 | Description       |
-| ------ | ------------------------ | ----------------- |
-| POST   | `/register`              | Register new user |
-| POST   | `/login`                 | Login with JWT    |
-| GET    | `/api/v1/GetCurrentUser` | Get current user  |
-| PUT    | `/api/v1/UpdateUser`     | Update User       |
-| DELETE | `/api/v1/DeleteUser`     | Delete User       |
+| Method | Endpoint                  | Description       |
+| ------ | ------------------------- | ----------------- |
+| POST   | `/register`               | Register new user |
+| POST   | `/login`                  | Login with JWT    |
+| GET    | `/api/v1/GetCurrentUser`  | Get current user  |
+| PUT    | `/api/v1/UpdateUser/{id}` | Update User       |
+| DELETE | `/api/v1/DeleteUser/{id}` | Delete User       |
 
 ## Project Structure
 
