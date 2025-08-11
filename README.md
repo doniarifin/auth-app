@@ -66,7 +66,7 @@ _note: set port according to your local port_
 | POST   | `/register`              | Register new user |
 | POST   | `/login`                 | Login with JWT    |
 | GET    | `/api/v1/GetCurrentUser` | Get current user  |
-| GET    | `/api/v1/UpdateUser`     | Update User       |
+| PUT    | `/api/v1/UpdateUser`     | Update User       |
 
 ## Project Structure
 
