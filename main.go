@@ -41,7 +41,7 @@ func main() {
 	routes.SetupRoutes(app, db)
 
 	// Run server
-	port := os.Getenv("PORT")
+	port := os.Getenv("APP_PORT")
 	if port == "" {
 		port = "8080"
 	}

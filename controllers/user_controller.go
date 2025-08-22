@@ -29,9 +29,9 @@ type EmailResponse struct {
 // @Router /api/v1/GetCurrentUser [get]
 func GetCurrentUser(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		id := c.GetString("id")
+		email := c.GetString("email")
 
-		user, err := logics.FindUserByID(db, id)
+		user, err := logics.FindUserByEmail(db, email)
 		if err != nil || user == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get user"})
 			return
