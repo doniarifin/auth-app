@@ -26,7 +26,7 @@ cd auth-app
 
 ### 2. Rename/Copy .env_copy to .env
 
-Copy
+Setup the port and DB in `.env` file
 
 ```
 cp .env_copy .env
@@ -36,10 +36,16 @@ cp .env_copy .env
 
 Ensure you have **PostgreSQL** installed.
 
-Then run the app:
+- Install Depedencies:
 
 ```
 go mod tidy
+```
+
+- Entry point is inside of `cmd` directory, change dir to `cmd` dir, then run the app:
+
+```
+cd cmd
 go run main.go
 ```
 
