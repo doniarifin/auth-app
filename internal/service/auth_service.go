@@ -20,7 +20,7 @@ func NewAuthService(r repository.UserRepository) *AuthService {
 func (s AuthService) Register(req *dto.RegisterRequest) (*dto.RegisterResponse, error) {
 	hashedPassword, _ := utils.HashPassword(req.Password)
 
-	user := model.User{
+	user := &model.User{
 		ID:       utils.GenerateUUID(),
 		Name:     req.Name,
 		Email:    req.Email,

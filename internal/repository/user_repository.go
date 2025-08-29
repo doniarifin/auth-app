@@ -10,7 +10,7 @@ type UserRepository interface {
 	FindAll() ([]model.User, error)
 	FindByEmail(string) (*model.User, error)
 	FindByID(string) (*model.User, error)
-	Create(model.User) error
+	Create(*model.User) error
 	Update(*model.User) error
 	Delete([]string) error
 }
@@ -50,7 +50,7 @@ func (u userRepositoryGorm) FindByID(id string) (*model.User, error) {
 	return &user, nil
 }
 
-func (u userRepositoryGorm) Create(m model.User) error {
+func (u userRepositoryGorm) Create(m *model.User) error {
 	return u.db.Create(m).Error
 }
 
