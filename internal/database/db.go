@@ -1,6 +1,7 @@
 package database
 
 import (
+	"auth-app/internal/model"
 	"fmt"
 	"os"
 
@@ -33,4 +34,8 @@ func ConnectDB() (*gorm.DB, error) {
 
 	fmt.Println("db connected!")
 	return db, nil
+}
+
+func RunMigration(db *gorm.DB) {
+	db.AutoMigrate(&model.User{})
 }

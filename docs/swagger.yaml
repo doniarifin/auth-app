@@ -1,127 +1,48 @@
 definitions:
-  controllers.DeleteReponse:
-    properties:
-      message:
-        type: string
-    type: object
-  controllers.EmailResponse:
-    properties:
-      email:
-        type: string
-      id:
-        type: string
-    type: object
-  controllers.LoginRequest:
+  dto.LoginRequest:
     properties:
       email:
         type: string
       password:
-        type: string
-    type: object
-  controllers.LoginResponse:
-    properties:
-      message:
-        type: string
-      token:
-        type: string
-    type: object
-  controllers.RegisterRequest:
-    properties:
-      email:
-        type: string
-      password:
-        minLength: 6
+        minLength: 8
         type: string
     required:
     - email
     - password
     type: object
-  controllers.RegisterResponse:
+  dto.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  dto.RegisterResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  handler.LoginResponse:
     properties:
       message:
         type: string
       token:
         type: string
     type: object
-  controllers.UserReponse:
-    properties:
-      message:
-        type: string
-    type: object
-  controllers.UserRequest:
-    properties:
-      email:
-        type: string
-    type: object
 info:
   contact: {}
 paths:
-  /api/v1/DeleteUser/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete a user given their ID
-      parameters:
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controllers.DeleteReponse'
-      security:
-      - BearerAuth: []
-      tags:
-      - User
-  /api/v1/GetCurrentUser:
-    get:
-      consumes:
-      - application/json
-      description: Get current user by ID
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controllers.EmailResponse'
-      security:
-      - BearerAuth: []
-      tags:
-      - User
-  /api/v1/UpdateUser/{id}:
-    put:
-      consumes:
-      - application/json
-      description: Update a user's email
-      parameters:
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: User data
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/controllers.UserRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controllers.UserReponse'
-      security:
-      - BearerAuth: []
-      tags:
-      - User
   /login:
     post:
       consumes:
@@ -131,14 +52,14 @@ paths:
         in: body
         name: request
         schema:
-          $ref: '#/definitions/controllers.LoginRequest'
+          $ref: '#/definitions/dto.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controllers.LoginResponse'
+            $ref: '#/definitions/handler.LoginResponse'
       tags:
       - Auth
   /register:
@@ -150,14 +71,14 @@ paths:
         in: body
         name: request
         schema:
-          $ref: '#/definitions/controllers.RegisterRequest'
+          $ref: '#/definitions/dto.RegisterRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controllers.RegisterResponse'
+            $ref: '#/definitions/dto.RegisterResponse'
       tags:
       - Auth
 securityDefinitions:
