@@ -56,7 +56,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 Run `swag init` in the project root containing `main.go` to generate the docs folder and `docs/docs.go` file from your comments.
 
 ```
-swag init
+swag init -g cmd/main.go
 ```
 
 **[Click here](https://github.com/swaggo/swag)** to view the Swaggo documentation
@@ -73,27 +73,36 @@ _note: set port according to your local port_
 
 ## Endpoints
 
-| Method | Endpoint                  | Description       |
-| ------ | ------------------------- | ----------------- |
-| POST   | `/register`               | Register new user |
-| POST   | `/login`                  | Login with JWT    |
-| GET    | `/api/v1/GetCurrentUser`  | Get current user  |
-| PUT    | `/api/v1/UpdateUser/{id}` | Update User       |
-| DELETE | `/api/v1/DeleteUser/{id}` | Delete User       |
+| Method | Endpoint                 | Description                    |
+| ------ | ------------------------ | ------------------------------ |
+| POST   | `/register`              | Register new user              |
+| POST   | `/login`                 | Login with JWT                 |
+| GET    | `/api/v1/GetCurrentUser` | Get current user               |
+| GET    | `/api/v1/GetAllUsers`    | Get all users                  |
+| PUT    | `/api/v1/Update/{id}`    | Update User                    |
+| DELETE | `/api/v1/Delete/{id}`    | Delete User with Authorization |
 
 ## Project Structure
 
 ```
 auth-app/
-├── config/          # Load env & config
-├── controllers/     # Auth handlers
-├── database/        # DB connection & migration
-├── middleware/      # JWT Middleware
-├── models/          # User model
-├── routes/          # Route setup
-├── utils/           # Hashing & JWT
-├── .env             # Environment variables
-├── main.go          # Entry point
+├── cmd/              # entry point
+├── config/           # config
+├── docs/             # swagger docs
+├── internal
+│   ├── database/     # database
+│   ├── dto/          # data tranfer object
+│   ├── handler/      # handler
+│   ├── middleware/   # middleware and authorization
+│   ├── model/        # model
+│   ├── pkg
+│   │   ├── jwt/      # jwt
+│   │   └── logger/
+│   ├── repository/   # repository
+│   ├── routes/       # setup routes
+│   ├── service/      # service / bussines logic
+│   └── utils/        # utilities
+└── .env              # environment variables
 ```
 
 ## Stack

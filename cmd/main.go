@@ -2,8 +2,8 @@ package main
 
 import (
 	"auth-app/config"
-	"auth-app/database"
-	"auth-app/routes"
+	"auth-app/internal/database"
+	"auth-app/internal/routes"
 	"log"
 	"os"
 

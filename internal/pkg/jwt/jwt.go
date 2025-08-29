@@ -1,7 +1,8 @@
-package utils
+package jwt
 
 import (
 	"auth-app/config"
+	"auth-app/internal/model"
 	"errors"
 	"time"
 
@@ -10,10 +11,12 @@ import (
 
 var jwtSecret = []byte(config.GetJWTSecret())
 
-func GenerateJWT(email string) (string, error) {
+func GenerateJWT(user *model.User) (string, error) {
 	claims := jwt.MapClaims{
-		"email": email,
-		"exp":   time.Now().Add(time.Hour * 2).Unix(),
+		"user_id": user.ID,
+		"email":   user.Email,
+		"role":    user.Role,
+		"exp":     time.Now().Add(time.Hour * 2).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
