@@ -9,15 +9,15 @@ import (
 	"errors"
 )
 
-type UserService struct {
+type AuthService struct {
 	repo repository.UserRepository
 }
 
-func NewUserService(r repository.UserRepository) *UserService {
-	return &UserService{r}
+func NewAuthService(r repository.UserRepository) *AuthService {
+	return &AuthService{r}
 }
 
-func (s UserService) Register(req *dto.RegisterRequest) (*dto.RegisterResponse, error) {
+func (s AuthService) Register(req *dto.RegisterRequest) (*dto.RegisterResponse, error) {
 	hashedPassword, _ := utils.HashPassword(req.Password)
 
 	user := model.User{
@@ -37,7 +37,7 @@ func (s UserService) Register(req *dto.RegisterRequest) (*dto.RegisterResponse, 
 	}, nil
 }
 
-func (s UserService) Login(req *dto.LoginRequest) (string, error) {
+func (s AuthService) Login(req *dto.LoginRequest) (string, error) {
 	user, err := s.repo.FindByEmail(req.Email)
 	if err != nil {
 		return "", err

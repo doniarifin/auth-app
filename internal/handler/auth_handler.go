@@ -9,12 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler struct {
-	service *service.UserService
+type AuthHandler struct {
+	service *service.AuthService
 }
 
-func NewUserHandler(s *service.UserService) *UserHandler {
-	return &UserHandler{s}
+func NewAuthHandler(s *service.AuthService) *AuthHandler {
+	return &AuthHandler{s}
 }
 
 // Register godoc
@@ -25,7 +25,7 @@ func NewUserHandler(s *service.UserService) *UserHandler {
 // @Param request body dto.RegisterRequest false "Register Request"
 // @Success 200 {object} dto.RegisterResponse
 // @Router /register [post]
-func (h UserHandler) Register(c *gin.Context) {
+func (h AuthHandler) Register(c *gin.Context) {
 	var req dto.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -59,7 +59,7 @@ type LoginResponse struct {
 // @Param request body dto.LoginRequest false "Login Request"
 // @Success 200 {object} LoginResponse
 // @Router /login [post]
-func (h UserHandler) Login(c *gin.Context) {
+func (h AuthHandler) Login(c *gin.Context) {
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

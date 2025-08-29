@@ -25,6 +25,19 @@ func JWTMiddleware() gin.HandlerFunc {
 
 		c.Set("email", claims["email"])
 		c.Set("user_id", claims["user_id"])
+		c.Set("role", claims["role"])
+		c.Next()
+	}
+}
+
+func Authorization(requiredRole string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role, exists := c.Get("role")
+		if !exists || role != requiredRole {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Forbidden"})
+			c.Abort()
+			return
+		}
 		c.Next()
 	}
 }
