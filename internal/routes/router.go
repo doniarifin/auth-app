@@ -4,6 +4,7 @@ import (
 	"auth-app/docs"
 	"auth-app/internal/handler"
 	"auth-app/internal/middleware"
+	"auth-app/internal/model"
 	"auth-app/internal/repository"
 	"auth-app/internal/service"
 	"time"
@@ -52,5 +53,5 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	protected.GET("/GetAllUsers", userHandler.GetAllUsers)
 	protected.GET("/GetCurrentUser", userHandler.GetCurrentUser)
 	protected.PUT("/Update/:id", userHandler.Update)
-	protected.DELETE("/Delete/:id", middleware.Authorization("admin"), userHandler.Delete)
+	protected.DELETE("/Delete/:id", middleware.Authorization(model.AdminRole.String()), userHandler.Delete)
 }
