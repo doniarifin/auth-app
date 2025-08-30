@@ -76,15 +76,11 @@ type UpdateResponse struct {
 // @Success 200 {object} dto.UserReponse
 // @Router /api/v1/Update/{id} [put]
 func (h UserHandler) Update(c *gin.Context) {
-	//get user id
+	//get user_id and role from jwt
 	userID := c.GetString("user_id")
+	userRole := c.GetString("role")
 	//get param
 	paramID := c.Param("id")
-
-	if userID != paramID {
-		c.JSON(http.StatusForbidden, gin.H{"error": "cannot update another user"})
-		return
-	}
 
 	var req dto.UserRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -99,6 +95,12 @@ func (h UserHandler) Update(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": utils.FormatValidationError(err),
 		})
+		return
+	}
+
+	//check autorization
+	if userID != paramID && userRole != model.AdminRole.String() {
+		c.JSON(http.StatusForbidden, gin.H{"error": "cannot update another user"})
 		return
 	}
 
