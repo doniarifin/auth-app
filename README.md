@@ -2,6 +2,8 @@
 
 Simple authentication API built with **Go**, **Gin**, and **PostgreSQL**.
 
+[Live Demo](https://go-auth-app.koyeb.app/swagger/index.html)
+
 ---
 
 ## Features
