@@ -42,7 +42,7 @@ func ConnectDB() (*gorm.DB, error) {
 	)
 
 	wd, _ := os.Getwd()
-	sourceURL := fmt.Sprintf("file://%s/internal/migrations", wd)
+	sourceURL := fmt.Sprintf("file://%s/prod/migrations", wd)
 
 	m, err := migrate.New(
 		sourceURL,
