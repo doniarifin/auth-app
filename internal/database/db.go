@@ -3,19 +3,23 @@ package database
 import (
 	"auth-app/internal/model"
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func ConnectDB() (*gorm.DB, error) {
+
 	user := os.Getenv("DB_USER")
 	pass := os.Getenv("DB_PASS")
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
-	name := os.Getenv("DB_NAME")
-
+	dbname := os.Getenv("DB_NAME")
 	// for sqlserver
 	// dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
 	// 	user, pass, host, port, name,
@@ -24,12 +28,26 @@ func ConnectDB() (*gorm.DB, error) {
 
 	//for postgres
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
-		host, user, pass, name, port,
+		host, user, pass, dbname, port,
 	)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		return nil, err
+	}
+
+	//run migrate
+	stingconn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		user, pass, host, port, dbname,
+	)
+	m, err := migrate.New(
+		"file://../internal/migrations",
+		stingconn)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := m.Up(); err != nil {
+		fmt.Println(err)
 	}
 
 	fmt.Println("db connected!")
