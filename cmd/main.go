@@ -23,7 +23,7 @@ func main() {
 		log.Fatal("DB connection error: ", err)
 	}
 
-	database.RunMigration(db)
+	// database.RunMigration(db)
 
 	// Init Gin
 	app := gin.Default()
