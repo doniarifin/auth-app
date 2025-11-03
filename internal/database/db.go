@@ -40,8 +40,12 @@ func ConnectDB() (*gorm.DB, error) {
 	stingconn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		user, pass, host, port, dbname,
 	)
+
+	wd, _ := os.Getwd()
+	sourceURL := fmt.Sprintf("file://%s/internal/migrations", wd)
+
 	m, err := migrate.New(
-		"file://../internal/migrations",
+		sourceURL,
 		stingconn)
 	if err != nil {
 		log.Fatal(err)
