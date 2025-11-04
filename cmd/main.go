@@ -17,18 +17,18 @@ func main() {
 	// Init env
 	config.InitEnv()
 
-	// Connect DB
-	db, err := database.ConnectDB()
-	if err != nil {
-		log.Fatal("DB connection error: ", err)
-	}
-
 	//check file
 	wd, _ := os.Getwd()
 	log.Println("Working dir:", wd)
 	files, _ := os.ReadDir(".")
 	for _, f := range files {
 		log.Println("File:", f.Name())
+	}
+
+	// Connect DB
+	db, err := database.ConnectDB()
+	if err != nil {
+		log.Fatal("DB connection error: ", err)
 	}
 
 	// database.RunMigration(db)
