@@ -119,6 +119,7 @@ auth-app/
 - Gin
 - GORM
 - PostgreSQL
+- Golang migrate
 - JWT
 - bcrypt
 - Swagger
