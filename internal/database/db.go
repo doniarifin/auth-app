@@ -20,6 +20,7 @@ func ConnectDB() (*gorm.DB, error) {
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	dbname := os.Getenv("DB_NAME")
+	appenv := os.Getenv("APP_ENV")
 	// for sqlserver
 	// dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
 	// 	user, pass, host, port, name,
@@ -42,7 +43,11 @@ func ConnectDB() (*gorm.DB, error) {
 	)
 
 	wd, _ := os.Getwd()
-	sourceURL := fmt.Sprintf("file://%s/prod/migrations", wd)
+	sourceURL := fmt.Sprintf("file://%s/../internal/migrations", wd)
+
+	if appenv == "local" {
+		sourceURL = fmt.Sprintf("file://%s/../internal/migrations", wd)
+	}
 
 	m, err := migrate.New(
 		sourceURL,
