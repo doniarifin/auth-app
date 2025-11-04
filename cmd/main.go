@@ -23,6 +23,14 @@ func main() {
 		log.Fatal("DB connection error: ", err)
 	}
 
+	//check file
+	wd, _ := os.Getwd()
+	log.Println("Working dir:", wd)
+	files, _ := os.ReadDir(".")
+	for _, f := range files {
+		log.Println("File:", f.Name())
+	}
+
 	// database.RunMigration(db)
 
 	// Init Gin
